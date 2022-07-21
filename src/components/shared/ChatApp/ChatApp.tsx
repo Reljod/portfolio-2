@@ -117,7 +117,7 @@ const ChatApp = () => {
       >
         <div className="w-7 h-7 rounded-full bg-white mx-2">
           <Image
-            src="https://www.dropbox.com/s/8ptxkq2xcqvm590/mock-profile-pic-male.jpg?raw=1"
+            src="https://i.ibb.co/C8JjRyn/mock-profile-pic-male.jpg"
             alt="mock-profile-pic-male"
             className="rounded-full"
             width="28"

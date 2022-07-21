@@ -82,7 +82,7 @@ const Login = () => {
                     className="w-50 h-50 hover:cursor-pointer hover:scale-110"
                   >
                     <Image
-                      src="https://www.dropbox.com/s/86uhz83zqa65jee/google-logo.png?raw=1"
+                      src="https://i.ibb.co/sKLGZp9/google-logo.png"
                       alt="google-logo"
                       width="50"
                       height="50"
@@ -95,7 +95,7 @@ const Login = () => {
                     className="w-50 h-50 hover:cursor-pointer hover:scale-110"
                   >
                     <Image
-                      src="https://www.dropbox.com/s/dwtbsrchbqsjf39/facebook-logo.png?raw=1"
+                      src="https://i.ibb.co/Sy9txnp/facebook-logo.png"
                       alt="facebook-logo"
                       width="50"
                       height="50"
