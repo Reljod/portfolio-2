@@ -7,6 +7,8 @@ const envSchema = z.object({
   NEXTAUTH_URL: z.string().url(),
   FACEBOOK_CLIENT_ID: z.string(),
   FACEBOOK_CLIENT_SECRET: z.string(),
+  GOOGLE_CLIENT_ID: z.string(),
+  GOOGLE_CLIENT_SECRET: z.string(),
 });
 
 module.exports.envSchema = envSchema;

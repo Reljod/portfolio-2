@@ -1,6 +1,7 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
 
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -24,18 +25,34 @@ export const authOptions: NextAuthOptions = {
       clientId: env.FACEBOOK_CLIENT_ID,
       clientSecret: env.FACEBOOK_CLIENT_SECRET,
     }),
-    // ...add more providers here
+    GoogleProvider({
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        name: {
-          label: "Name",
+        emailAddress: {
+          label: "Email Adress",
           type: "text",
-          placeholder: "Enter your name",
+          placeholder: "Enter your email address",
+        },
+        firstName: {
+          label: "Firstname",
+          type: "text",
+          placeholder: "Enter your firstname",
         },
       },
       async authorize(credentials, _req) {
-        const user = { id: 1, name: credentials?.name ?? "J Smith" };
+        if (!credentials?.firstName || !credentials?.emailAddress) {
+          return null;
+        }
+
+        const user = {
+          id: 1,
+          name: credentials?.firstName,
+          email: credentials?.emailAddress,
+        };
         return user;
       },
     }),
