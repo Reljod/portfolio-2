@@ -7,10 +7,8 @@ import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useEffect } from "react";
-import { trpc } from "utils/trpc";
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "world!" }]);
   const { data: session, status } = useSession();
 
   useEffect(() => {
