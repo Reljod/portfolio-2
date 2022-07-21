@@ -6,13 +6,17 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
-    // url      = "file:./db.sqlite"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 
-model Example {
-    id String @id @default(cuid())
+model Chat {
+    id          String @id @default(cuid())
+    sender      String
+    receiver    String
+    message_id  Int @default(autoincrement())
+    timestamp   DateTime @default(now())
+    message     String
 }
 
 // Necessary for Next auth
