@@ -1,6 +1,7 @@
 import LandingPage from "components/app/home/LandingPage";
 import ChatApp from "components/shared/ChatApp";
 import LoginModal from "components/shared/modals/LoginModal";
+import SignOutModal from "components/shared/modals/SignOutModal";
 import UserModal from "components/shared/modals/UserModal";
 import { isAuthorized } from "lib/utils/auth";
 import { getFirstName } from "lib/utils/stringUtils";
@@ -16,10 +17,17 @@ const Home: NextPage = () => {
   const providers = trpc.useQuery(["auth.getProviders"]);
 
   const [isShowProfile, setIsShowProfile] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
 
   useEffect(() => {
     console.log("session:", session);
   }, [session]);
+
+  const onSignOut = async () => {
+    setIsSigningOut(true);
+    await signOut({ callbackUrl: "/" });
+    setIsSigningOut(false);
+  };
 
   return (
     <>
@@ -33,6 +41,7 @@ const Home: NextPage = () => {
         <section id="home" className="relative">
           <>
             {status !== "loading" && !isAuthorized(session) && <LoginModal />}
+            {isSigningOut && <SignOutModal />}
             <div className="relative w-screen h-screen py-6 pl-48 pr-24">
               <div className="grid grid-cols-5 h-full">
                 <div className="col-span-2 flex flex-col justify-center space-y-1">
@@ -85,7 +94,7 @@ const Home: NextPage = () => {
                   </>
                 )}
                 <button
-                  onClick={() => signOut({ callbackUrl: "/" })}
+                  onClick={onSignOut}
                   className="absolute bottom-2 right-2 p-2 text-red-500 text-sm"
                 >
                   Sign out

@@ -1,8 +1,9 @@
+import SignInModal from "components/shared/modals/SignInModal";
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface ILoginInput {
@@ -14,6 +15,7 @@ const Login = () => {
   const { register, handleSubmit } = useForm<ILoginInput>();
   const router = useRouter();
   const { status } = useSession();
+  const [isSigningIn, setIsSigningIn] = useState(false);
 
   useEffect(() => {
     if (router.isReady && status === "authenticated") {
@@ -21,6 +23,16 @@ const Login = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
+
+  const onGoogleLogin = async () => {
+    setIsSigningIn(true);
+    await signIn("google", { callbackUrl: "/#home" });
+  };
+
+  const onFacebookLogin = async () => {
+    setIsSigningIn(true);
+    await signIn("facebook", { callbackUrl: "/#home" });
+  };
 
   const onSubmit: SubmitHandler<ILoginInput> = (data: ILoginInput) => {
     console.log(data.firstname, data.emailAddress);
@@ -32,9 +44,10 @@ const Login = () => {
         <title>Login Page</title>
         <meta name="description" content="Login Page" />
       </Head>
-      {status !== "loading" && (
+      {status === "unauthenticated" && (
         <main id="login-page" className="text-white">
           <div className="w-screen h-screen flex items-center justify-center p-6 ">
+            {isSigningIn && <SignInModal />}
             <div
               id="login-form"
               className="h-[480px] w-[480px] flex flex-col bg-zinc-800 rounded-xl p-8 shadow-lg"
@@ -78,7 +91,7 @@ const Login = () => {
                 <p>Or sign in via:</p>
                 <div id="providers-image" className="flex my-2 space-x-4">
                   <div
-                    onClick={() => signIn("google", { callbackUrl: "/" })}
+                    onClick={onGoogleLogin}
                     className="w-50 h-50 hover:cursor-pointer hover:scale-110"
                   >
                     <Image
@@ -89,7 +102,7 @@ const Login = () => {
                     />
                   </div>
                   <div
-                    onClick={() => signIn("facebook", { callbackUrl: "/" })}
+                    onClick={onFacebookLogin}
                     className="w-50 h-50 hover:cursor-pointer hover:scale-110"
                   >
                     <Image
