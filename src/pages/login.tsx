@@ -78,7 +78,7 @@ const Login = () => {
                 <p>Or sign in via:</p>
                 <div id="providers-image" className="flex my-2 space-x-4">
                   <div
-                    onClick={() => signIn("google", { callbackUrl: "/#home" })}
+                    onClick={() => signIn("google", { callbackUrl: "/" })}
                     className="w-50 h-50 hover:cursor-pointer hover:scale-110"
                   >
                     <Image
@@ -89,9 +89,7 @@ const Login = () => {
                     />
                   </div>
                   <div
-                    onClick={() =>
-                      signIn("facebook", { callbackUrl: "/#home" })
-                    }
+                    onClick={() => signIn("facebook", { callbackUrl: "/" })}
                     className="w-50 h-50 hover:cursor-pointer hover:scale-110"
                   >
                     <Image

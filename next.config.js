@@ -5,7 +5,7 @@ const nextConfig = {
   baseUrl: "./src",
   reactStrictMode: true,
   images: {
-    domains: ['github.com', 'i.ibb.co'],
+    domains: ['github.com', 'i.ibb.co', 'platform-lookaside.fbsbx.com'],
   },
 };
 

@@ -1,19 +1,25 @@
 import LandingPage from "components/app/home/LandingPage";
 import ChatApp from "components/shared/ChatApp";
 import LoginModal from "components/shared/modals/LoginModal";
+import UserModal from "components/shared/modals/UserModal";
 import { isAuthorized } from "lib/utils/auth";
 import { getFirstName } from "lib/utils/stringUtils";
 import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
-import { useEffect } from "react";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import { trpc } from "utils/trpc";
 
 const Home: NextPage = () => {
   const { data: session, status } = useSession();
+  const providers = trpc.useQuery(["auth.getProviders"]);
+
+  const [isShowProfile, setIsShowProfile] = useState(false);
 
   useEffect(() => {
-    console.log(session, status);
-  }, [session, status]);
+    console.log("session:", session);
+  }, [session]);
 
   return (
     <>
@@ -27,7 +33,7 @@ const Home: NextPage = () => {
         <section id="home" className="relative">
           <>
             {status !== "loading" && !isAuthorized(session) && <LoginModal />}
-            <div className="relative w-screen h-screen p-6 pl-48">
+            <div className="relative w-screen h-screen py-6 pl-48 pr-24">
               <div className="grid grid-cols-5 h-full">
                 <div className="col-span-2 flex flex-col justify-center space-y-1">
                   <h1 className="text-4xl">
@@ -53,24 +59,38 @@ const Home: NextPage = () => {
                 </div>
               </div>
             </div>
-            {/* {!isUnauthorized(session) && (
-              <div className="absolute top-2 right-2 w-[28px] h-[28px] rounded-full bg-white mx-2">
-                <Image
-                  src={`${session && (session?.user?.image as string)}`}
-                  alt="user-profile-picture"
-                  className="rounded-full"
-                  width="28"
-                  height="28"
-                />
-              </div>
-            )} */}
-            {isAuthorized(session) && (
-              <button
-                onClick={() => signOut({ callbackUrl: "/" })}
-                className="absolute bottom-2 right-2 p-2 text-red-500 text-sm"
-              >
-                Sign out
-              </button>
+            {session && isAuthorized(session) && (
+              <>
+                <div
+                  onClick={() => setIsShowProfile(true)}
+                  className="absolute top-2 right-2 w-10 h-10 rounded-full shadow-xs shadow-black hover:brightness-105 hover:cursor-pointer"
+                >
+                  <Image
+                    src={session?.user?.image as string}
+                    alt="profile-pic"
+                    height="40px"
+                    width="40px"
+                    className="rounded-full"
+                  />
+                </div>
+                {isShowProfile && (
+                  <>
+                    <div
+                      onClick={() => setIsShowProfile(false)}
+                      className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-10 flex justify-center items-center z-10"
+                    ></div>
+                    <div className="absolute top-14 right-2 z-20">
+                      <UserModal />
+                    </div>
+                  </>
+                )}
+                <button
+                  onClick={() => signOut({ callbackUrl: "/" })}
+                  className="absolute bottom-2 right-2 p-2 text-red-500 text-sm"
+                >
+                  Sign out
+                </button>
+              </>
             )}
           </>
         </section>
