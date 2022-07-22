@@ -1,4 +1,5 @@
 import { TRPCError } from "@trpc/server";
+import { getProviders } from "next-auth/react";
 import { createRouter } from "./context";
 
 export const authRouter = createRouter()
@@ -18,5 +19,11 @@ export const authRouter = createRouter()
   .query("getSecretMessage", {
     async resolve({ ctx }) {
       return "You are logged in and can see this secret message!";
+    },
+  })
+  .query("getProviders", {
+    async resolve() {
+      const providers = await getProviders();
+      return providers;
     },
   });

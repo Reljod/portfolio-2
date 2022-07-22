@@ -19,7 +19,6 @@ const isMessageOwner = (session: any, sender: string) => {
 };
 
 const ChatApp = () => {
-  // const [status, setStatus] = useState("Offline");
   const [chatInputText, setChatInputText] = useState("");
   const [chatMessages, setChatMessages] = useState<FetchMsgType>([]);
   const { data: session, status } = useSession();
@@ -27,7 +26,10 @@ const ChatApp = () => {
 
   const fetchMessagesQuery = trpc.useQuery([
     "fetchMessage.fetchMessages",
-    { sender: session?.user?.id as string, receiver: RECEIVER },
+    {
+      sender: session?.user?.id as string,
+      receiver: session?.user?.id as string,
+    },
   ]);
 
   const sendMessageMutation = trpc.useMutation(["sendMessage.sendMessage"]);
