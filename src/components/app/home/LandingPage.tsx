@@ -18,7 +18,7 @@ const LandingPage = () => {
       id="landing-page"
       className="relative w-screen h-screen p-2 md:p-6"
     >
-      <div className="flex flex-col h-full justify-center space-y-3 mx-auto px-6 md:pl-48">
+      <div className="flex flex-col h-full justify-center space-y-3 px-6 md:pl-48">
         <p id="introduction" className="text-3xl">
           Nice to meet you!
           <br />
