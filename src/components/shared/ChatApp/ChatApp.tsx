@@ -95,19 +95,22 @@ const ChatApp = () => {
             chatMessages.length > 0 &&
             chatMessages.map((chatMsgObj, index) => {
               return (
-                <div
-                  key={index}
-                  className={`flex flex-col items-start ${
-                    isMessageOwner(session, chatMsgObj.sender)
-                      ? "justify-end"
-                      : "justify-start"
-                  } max-w-[300px] px-4 py-1 ${
-                    isMessageOwner(session, chatMsgObj.sender)
-                      ? "bg-blue-600"
-                      : "bg-zinc-700"
-                  } rounded-2xl m-1`}
-                >
-                  <p className="text-sm text-end over">{chatMsgObj.message}</p>
+                <div key={index} className="w-full flex flex-col items-start">
+                  <div
+                    className={`${
+                      isMessageOwner(session, chatMsgObj.sender)
+                        ? "self-end"
+                        : "self-start"
+                    } w-fit px-4 py-1 ${
+                      isMessageOwner(session, chatMsgObj.sender)
+                        ? "bg-blue-600"
+                        : "bg-zinc-700"
+                    } rounded-2xl m-1`}
+                  >
+                    <p className="text-sm text-end over">
+                      {chatMsgObj.message}
+                    </p>
+                  </div>
                 </div>
               );
             })}
