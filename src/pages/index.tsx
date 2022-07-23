@@ -42,7 +42,7 @@ const Home: NextPage = () => {
           <>
             {status !== "loading" && !isAuthorized(session) && <LoginModal />}
             {isSigningOut && <SignOutModal />}
-            <div className="relative w-screen h-screen py-6 px-2 md:pl-48 md:pr-24">
+            <div className="relative w-screen h-screen py-6 px-6 md:pl-48 md:pr-24">
               <div className="h-full flex flex-col md:grid md:grid-cols-5">
                 <div className="flex flex-col justify-center space-y-1 w-1/2 md:w-full md:col-span-2">
                   <h1 className="md:text-4xl">
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
                 </div>
                 <div
                   id="chatting-app"
-                  className="col-span-3 flex flex-col items-center h-full p-5 text-white"
+                  className="col-span-3 flex flex-col items-center h-full py-5 text-white md:p-5"
                 >
                   <h2 className="text-center my-2">Let&apos;s chat!</h2>
                   <ChatApp />
