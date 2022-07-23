@@ -87,9 +87,9 @@ const ChatApp = () => {
   };
 
   return (
-    <div className="relative h-[636px] w-[400px] rounded-3xl bg-zinc-800">
+    <div className="relative w-full h-4/5 sm:w-[300px] md:w-[400px] md:h-5/6 rounded-3xl bg-zinc-800">
       <div className="h-full w-full bg-transparent py-12">
-        <div className="h-full w-full overflow-y-auto flex flex-col-reverse items-end p-2">
+        <div className="h-full w-full overflow-y-auto flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
             fetchMessagesQuery.isSuccess &&
             chatMessages.length > 0 &&

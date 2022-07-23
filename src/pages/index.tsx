@@ -42,26 +42,26 @@ const Home: NextPage = () => {
           <>
             {status !== "loading" && !isAuthorized(session) && <LoginModal />}
             {isSigningOut && <SignOutModal />}
-            <div className="relative w-screen h-screen py-6 pl-48 pr-24">
-              <div className="grid grid-cols-5 h-full">
-                <div className="col-span-2 flex flex-col justify-center space-y-1">
-                  <h1 className="text-4xl">
+            <div className="relative w-screen h-screen py-6 px-6 md:pl-48 md:pr-24">
+              <div className="h-full flex flex-col md:grid md:grid-cols-5">
+                <div className="flex flex-col justify-center space-y-1 w-1/2 md:w-full md:col-span-2">
+                  <h1 className="md:text-4xl">
                     Ask me about anything
                     {isAuthorized(session) && (
-                      <span className="text-5xl text-green-300">
+                      <span className="text-xl text-green-300 md:text-5xl">
                         {" " + getFirstName(session?.user?.name as string)}
                       </span>
                     )}
                     !
                   </h1>
-                  <p className="text-lg text-gray-400 italic">
+                  <p className="text-xs text-gray-400 italic md:text-lg">
                     Let&apos;s talk about how we can create solutions in your
                     business.
                   </p>
                 </div>
                 <div
                   id="chatting-app"
-                  className="col-span-3 flex flex-col items-center h-full p-5 text-white"
+                  className="col-span-3 flex flex-col items-center h-full py-5 text-white md:p-5"
                 >
                   <h2 className="text-center my-2">Let&apos;s chat!</h2>
                   <ChatApp />
