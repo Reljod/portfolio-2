@@ -83,15 +83,7 @@ const Home: NextPage = () => {
                   />
                 </div>
                 {isShowProfile && (
-                  <>
-                    <div
-                      onClick={() => setIsShowProfile(false)}
-                      className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-10 flex justify-center items-center z-10"
-                    ></div>
-                    <div className="absolute top-14 right-2 z-20">
-                      <UserModal />
-                    </div>
-                  </>
+                  <UserModal onClick={() => setIsShowProfile(false)} />
                 )}
                 <button
                   onClick={onSignOut}
