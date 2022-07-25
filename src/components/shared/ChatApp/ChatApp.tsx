@@ -38,12 +38,7 @@ const ChatApp = () => {
   useEffect(() => {
     const channel = Pusher.subscribe("chat");
     channel.bind("send-message", (data: any) => {
-      console.log("receive pusher data", data);
-      setChatMessages(chatMessages);
-      utils.invalidateQueries([
-        "fetchMessage.fetchMessages",
-        { sender: session?.user?.id as string, receiver: RECEIVER },
-      ]);
+      fetchMessagesQuery.refetch();
     });
     return () => {
       Pusher.unsubscribe("chat");
