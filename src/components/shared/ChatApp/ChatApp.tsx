@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import SendMessageIcon from "components/shared/icons/send-message.svg";
 import { isAuthorized } from "lib/utils/auth";
+import Pusher from "lib/utils/pusher";
 import { trpc } from "utils/trpc";
 
 const RECEIVER = "cl5tkhg260012xupvwot63ozj";
@@ -35,8 +36,15 @@ const ChatApp = () => {
   const sendMessageMutation = trpc.useMutation(["sendMessage.sendMessage"]);
 
   useEffect(() => {
-    console.log("Is fetching", fetchMessagesQuery.isFetching);
-  }, [fetchMessagesQuery.isFetching]);
+    const channel = Pusher.subscribe("chat");
+    channel.bind("send-message", (data: any) => {
+      fetchMessagesQuery.refetch();
+    });
+    return () => {
+      Pusher.unsubscribe("chat");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onChatEnter = (e: React.SyntheticEvent) => {
     e.preventDefault();

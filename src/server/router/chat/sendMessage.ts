@@ -1,3 +1,4 @@
+import { PusherServerClient } from "server/common/pusher";
 import { z } from "zod";
 import { createRouter } from "../context";
 
@@ -16,7 +17,10 @@ export const sendMessageRouter = createRouter().mutation("sendMessage", {
           message: input.message,
         },
       });
+
+      await PusherServerClient.trigger("chat", "send-message", {});
     } catch (err) {
+      console.error("Send message server error", err);
       throw err;
     }
   },
