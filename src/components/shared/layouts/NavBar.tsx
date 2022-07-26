@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 
 type Props = {};
@@ -23,11 +24,22 @@ const NavBarMinimizeBtn = ({ value, onClick }: NavBarMinimizeBtnProps) => {
   );
 };
 
-const NavBarItems: FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <div className="text-sm font-semibold">{children}</div>;
+const NavBarItems: FC<{ children: React.ReactNode; onClick: () => void }> = ({
+  children,
+  onClick,
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      className="px-2 py-2 text-sm font-semibold rounded-md hover:bg-zinc-700 hover:cursor-pointer active:bg-zinc-900"
+    >
+      {children}
+    </div>
+  );
 };
 
 const NavBar = (props: Props) => {
+  const router = useRouter();
   const [isMinimized, setIsMinimized] = useState(false);
 
   // Style functions
@@ -47,7 +59,7 @@ const NavBar = (props: Props) => {
 
   return (
     <div
-      className={`absolute top-0 left-0 h-screen ${setNavBarWidth()} bg-zinc-800 shadow-md shadow-slate-900 p-2`}
+      className={`relative h-screen ${setNavBarWidth()} bg-zinc-800 shadow-md shadow-slate-900 p-2`}
     >
       <NavBarMinimizeBtn
         onClick={() => setIsMinimized(!isMinimized)}
@@ -58,8 +70,10 @@ const NavBar = (props: Props) => {
           {isMinimized ? "A" : "Admin"}
         </h1>
         <section id="tabs" className="my-4 space-y-2">
-          <NavBarItems>{setNavValue("Dashboard", "D")}</NavBarItems>
-          <NavBarItems>
+          <NavBarItems onClick={() => router.push("/admin")}>
+            {setNavValue("Dashboard", "D")}
+          </NavBarItems>
+          <NavBarItems onClick={() => router.push("/admin/people/chat")}>
             <p>{setNavValue("People", "P")}</p>
           </NavBarItems>
         </section>

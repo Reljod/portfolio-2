@@ -19,7 +19,12 @@ const isMessageOwner = (session: any, sender: string) => {
   return session && isAuthorized(session) && session?.user?.id === sender;
 };
 
-const ChatApp = () => {
+type Props = {
+  senderId?: string;
+};
+
+const ChatApp = ({ senderId }: Props) => {
+  const sender = senderId || RECEIVER;
   const [chatInputText, setChatInputText] = useState("");
   const [chatMessages, setChatMessages] = useState<FetchMsgType>([]);
   const { data: session, status } = useSession();
@@ -28,10 +33,21 @@ const ChatApp = () => {
   const fetchMessagesQuery = trpc.useQuery([
     "fetchMessage.fetchMessages",
     {
-      sender: session?.user?.id as string,
+      sender: sender,
       receiver: session?.user?.id as string,
     },
   ]);
+
+  const { data: senderObj, isLoading: isSenderLoading } = trpc.useQuery([
+    "fetchAccounts.fetchAccountImageByID",
+    {
+      accountId: sender,
+    },
+  ]);
+
+  useEffect(() => {
+    console.log(senderObj);
+  }, [senderObj]);
 
   const sendMessageMutation = trpc.useMutation(["sendMessage.sendMessage"]);
 
@@ -51,7 +67,7 @@ const ChatApp = () => {
     if (status === "authenticated" && chatInputText.length > 0) {
       const message = {
         sender: session?.user?.id as string,
-        receiver: RECEIVER,
+        receiver: sender,
         message: chatInputText,
       };
       setChatMessages([message, ...chatMessages]);
@@ -59,13 +75,13 @@ const ChatApp = () => {
         {
           message: chatInputText,
           sender: session?.user?.id as string,
-          receiver: RECEIVER,
+          receiver: sender,
         },
         {
           onSuccess: () => {
             utils.invalidateQueries([
               "fetchMessage.fetchMessages",
-              { sender: session?.user?.id as string, receiver: RECEIVER },
+              { sender: session?.user?.id as string, receiver: sender },
             ]);
           },
         }
@@ -130,7 +146,10 @@ const ChatApp = () => {
       >
         <div className="w-7 h-7 rounded-full bg-white mx-2">
           <Image
-            src="https://i.ibb.co/C8JjRyn/mock-profile-pic-male.jpg"
+            src={
+              senderObj?.image ||
+              "https://i.ibb.co/C8JjRyn/mock-profile-pic-male.jpg"
+            }
             alt="mock-profile-pic-male"
             className="rounded-full"
             width="28"
@@ -138,7 +157,7 @@ const ChatApp = () => {
           ></Image>
         </div>
         <div className="flex flex-col justify-center space-y-1">
-          <p className="text-sm leading-none">Reljod Oreta</p>
+          <p className="text-sm leading-none">{senderObj?.name}</p>
           <p className="text-xs leading-none text-gray-400">Offline</p>
         </div>
       </div>
