@@ -9,12 +9,16 @@ import type { NextPage } from "next";
 import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { trpc } from "utils/trpc";
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const { data: session, status } = useSession();
   const providers = trpc.useQuery(["auth.getProviders"]);
+  const { data: adminAccounts, isLoading: isAccountFetchLoading } =
+    trpc.useQuery(["fetchAccounts.fetchAdminAccounts"]);
 
   const [isShowProfile, setIsShowProfile] = useState(false);
   const [isSigningOut, setIsSigningOut] = useState(false);
@@ -28,6 +32,18 @@ const Home: NextPage = () => {
     await signOut({ callbackUrl: "/" });
     setIsSigningOut(false);
   };
+
+  useEffect(() => {
+    if (router.isReady && status === "authenticated" && adminAccounts) {
+      const userId = session.user?.id;
+      for (let account of adminAccounts) {
+        if (account.id === userId) {
+          router.replace("/admin");
+          return;
+        }
+      }
+    }
+  }, [router, status, adminAccounts, session]);
 
   return (
     <>
