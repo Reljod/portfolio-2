@@ -6,6 +6,7 @@ import SendMessageIcon from "components/shared/icons/send-message.svg";
 import { isAuthorized } from "lib/utils/auth";
 import Pusher from "lib/utils/pusher";
 import { trpc } from "utils/trpc";
+import LoadingModal from "../modals/LoadingModal";
 
 const RECEIVER = "cl5tkhg260012xupvwot63ozj";
 
@@ -20,34 +21,51 @@ const isMessageOwner = (session: any, sender: string) => {
 };
 
 type Props = {
-  senderId?: string;
+  receiverId?: string;
 };
 
-const ChatApp = ({ senderId }: Props) => {
-  const sender = senderId || RECEIVER;
+const ChatApp = ({ receiverId }: Props) => {
+  const receiver = receiverId || RECEIVER;
   const [chatInputText, setChatInputText] = useState("");
   const [chatMessages, setChatMessages] = useState<FetchMsgType>([]);
   const { data: session, status } = useSession();
   const utils = trpc.useContext();
 
-  const fetchMessagesQuery = trpc.useQuery([
-    "fetchMessage.fetchMessages",
+  const fetchMessagesQuery = trpc.useQuery(
+    [
+      "fetchMessage.fetchMessages",
+      {
+        sender: receiver,
+        receiver: session?.user?.id as string,
+      },
+    ],
     {
-      sender: sender,
-      receiver: session?.user?.id as string,
-    },
-  ]);
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    }
+  );
 
-  const { data: senderObj, isLoading: isSenderLoading } = trpc.useQuery([
-    "fetchAccounts.fetchAccountImageByID",
+  const { data: senderObj, isLoading: isSenderLoading } = trpc.useQuery(
+    [
+      "fetchAccounts.fetchAccountImageByID",
+      {
+        accountId: receiver,
+      },
+    ],
     {
-      accountId: sender,
-    },
-  ]);
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   useEffect(() => {
-    console.log(senderObj);
-  }, [senderObj]);
+    console.log(chatMessages);
+  }, [chatMessages]);
+
+  useEffect(() => {
+    console.log("sender/current-user", session?.user?.id);
+    console.log("receiver", receiver);
+  }, [session?.user?.id, receiver]);
 
   const sendMessageMutation = trpc.useMutation(["sendMessage.sendMessage"]);
 
@@ -67,7 +85,7 @@ const ChatApp = ({ senderId }: Props) => {
     if (status === "authenticated" && chatInputText.length > 0) {
       const message = {
         sender: session?.user?.id as string,
-        receiver: sender,
+        receiver: receiver,
         message: chatInputText,
       };
       setChatMessages([message, ...chatMessages]);
@@ -75,13 +93,13 @@ const ChatApp = ({ senderId }: Props) => {
         {
           message: chatInputText,
           sender: session?.user?.id as string,
-          receiver: sender,
+          receiver: receiver,
         },
         {
           onSuccess: () => {
             utils.invalidateQueries([
               "fetchMessage.fetchMessages",
-              { sender: session?.user?.id as string, receiver: sender },
+              { sender: receiver, receiver: session?.user?.id as string },
             ]);
           },
         }
@@ -115,8 +133,8 @@ const ChatApp = ({ senderId }: Props) => {
       <div className="h-full w-full bg-transparent py-12">
         <div className="h-full w-full overflow-y-auto flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
-            fetchMessagesQuery.isSuccess &&
-            chatMessages.length > 0 &&
+          fetchMessagesQuery.isSuccess &&
+          chatMessages.length > 0 ? (
             chatMessages.map((chatMsgObj, index) => {
               return (
                 <div key={index} className="w-full flex flex-col items-start">
@@ -137,7 +155,10 @@ const ChatApp = ({ senderId }: Props) => {
                   </div>
                 </div>
               );
-            })}
+            })
+          ) : (
+            <LoadingModal />
+          )}
         </div>
       </div>
       <div
