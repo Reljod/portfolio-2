@@ -36,7 +36,7 @@ const Home: NextPage = () => {
   const onLoadEffect = () => {
     setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 3500);
   };
 
   useEffect(onLoadEffect, []);
