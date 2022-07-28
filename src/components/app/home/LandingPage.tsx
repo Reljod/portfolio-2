@@ -8,7 +8,6 @@ const LandingPage = () => {
 
   const onLandingPageButtonClick = () => {
     if (router.isReady) {
-      console.log(router.asPath);
       router.push("/#home");
     }
   };
