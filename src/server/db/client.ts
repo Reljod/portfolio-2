@@ -1,5 +1,5 @@
 // src/server/db/client.ts
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 import { env } from "../env";
 
 declare global {
@@ -15,3 +15,5 @@ export const prisma =
 if (env.NODE_ENV !== "production") {
   global.prisma = prisma;
 }
+
+export { Role };
