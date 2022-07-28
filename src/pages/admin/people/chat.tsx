@@ -1,20 +1,21 @@
 import ChatApp from "components/shared/ChatApp";
-import NavBar from "components/shared/layouts/NavBar";
+import AdminLayout from "components/shared/layouts/AdminLayout";
 import { getFirstName } from "lib/utils/stringUtils";
 import Image from "next/image";
 
 import { trpc } from "utils/trpc";
 
-type Props = {};
-
-const chat = (props: Props) => {
-  const { isLoading, data, isSuccess } = trpc.useQuery([
-    "fetchAccounts.fetchUserAccounts",
-  ]);
+const Chat = () => {
+  const { data, isSuccess } = trpc.useQuery(
+    ["fetchAccounts.fetchUserAccounts"],
+    {
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   return (
-    <div className="flex flex-row">
-      <NavBar />
+    <AdminLayout>
       <section id="chat-interface" className="flex p-3">
         <div
           id="chat-contacts"
@@ -44,12 +45,12 @@ const chat = (props: Props) => {
               </div>
             ))}
         </div>
-        <div className="mt-14 ml-10">
-          {isSuccess && <ChatApp senderId={data[0]?.id} />}
+        <div className="w-full h-4/5 sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] mt-14 ml-10 ">
+          {isSuccess && <ChatApp receiverId={data[0]?.id} />}
         </div>
       </section>
-    </div>
+    </AdminLayout>
   );
 };
 
-export default chat;
+export default Chat;

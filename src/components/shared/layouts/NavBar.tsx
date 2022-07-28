@@ -66,7 +66,10 @@ const NavBar = (props: Props) => {
         value={isMinimized ? NavBarMinEnum.MAXIMIZE : NavBarMinEnum.MINIMIZE}
       />
       <div className="flex flex-col">
-        <h1 className="self-center text-4xl font-bold">
+        <h1
+          onClick={() => router.push("/admin")}
+          className="self-center text-4xl font-bold hover:cursor-pointer"
+        >
           {isMinimized ? "A" : "Admin"}
         </h1>
         <section id="tabs" className="my-4 space-y-2">
