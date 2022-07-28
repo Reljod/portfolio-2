@@ -14,14 +14,32 @@ export const fetchMessagesRouter = createRouter().query("fetchMessages", {
         where: {
           OR: [
             {
-              sender: {
-                equals: input.sender,
-              },
+              AND: [
+                {
+                  sender: {
+                    equals: input.sender,
+                  },
+                },
+                {
+                  receiver: {
+                    equals: input.receiver,
+                  },
+                },
+              ],
             },
             {
-              receiver: {
-                equals: input.receiver,
-              },
+              AND: [
+                {
+                  sender: {
+                    equals: input.receiver,
+                  },
+                },
+                {
+                  receiver: {
+                    equals: input.sender,
+                  },
+                },
+              ],
             },
           ],
         },
