@@ -134,25 +134,24 @@ const ChatApp = ({ receiverId }: Props) => {
   return (
     <div className="relative w-full h-full min-h-[400px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-zinc-800">
       <div className="h-full w-full bg-transparent py-12">
-        <div className="h-full w-full overflow-y-auto flex flex-col-reverse items-end md:p-2">
+        <div className="h-full w-full overflow-y-auto overflow-x-hidden flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
             fetchMessagesQuery.isSuccess &&
             chatMessages.length > 0 &&
             chatMessages.map((chatMsgObj, index) => {
               return (
-                <div key={index} className="w-full flex flex-col items-start">
+                <div
+                  key={index}
+                  className="w-full flex flex-col items-start break-words"
+                >
                   <div
                     className={`${
                       isMessageOwner(session, chatMsgObj.sender)
-                        ? "self-end"
-                        : "self-start"
-                    } w-fit px-4 py-1 ${
-                      isMessageOwner(session, chatMsgObj.sender)
-                        ? "bg-blue-600"
-                        : "bg-zinc-700"
-                    } rounded-2xl m-1`}
+                        ? "self-end bg-blue-600 ml-8"
+                        : "self-start bg-zinc-700 mr-8"
+                    } w-fit px-4 py-1 rounded-2xl m-1`}
                   >
-                    <p className="text-sm text-end over">
+                    <p className="text-sm text-start break-all">
                       {chatMsgObj.message}
                     </p>
                   </div>
