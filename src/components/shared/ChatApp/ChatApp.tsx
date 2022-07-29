@@ -128,7 +128,7 @@ const ChatApp = ({ receiverId }: Props) => {
   };
 
   return (
-    <div className="relative w-full h-[600px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-zinc-800">
+    <div className="relative w-full h-full min-h-[400px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-zinc-800">
       <div className="h-full w-full bg-transparent py-12">
         <div className="h-full w-full overflow-y-auto flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
