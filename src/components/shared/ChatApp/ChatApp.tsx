@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import SendMessageIcon from "components/shared/icons/send-message.svg";
 import { isAuthorized } from "lib/utils/auth";
@@ -29,6 +29,7 @@ const ChatApp = ({ receiverId }: Props) => {
   const [chatMessages, setChatMessages] = useState<FetchMsgType>([]);
   const { data: session, status } = useSession();
   const utils = trpc.useContext();
+  const bottomRef = useRef<null | HTMLDivElement>(null);
 
   const fetchMessagesQuery = trpc.useQuery(
     [
@@ -81,6 +82,9 @@ const ChatApp = ({ receiverId }: Props) => {
 
   const onChatEnter = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
     if (status === "authenticated" && chatInputText.length > 0) {
       const message = {
         sender: session?.user?.id as string,
@@ -193,6 +197,7 @@ const ChatApp = ({ receiverId }: Props) => {
           <Image src={SendMessageIcon} alt="send-message-icon"></Image>
         </button>
       </form>
+      <div ref={bottomRef}></div>
     </div>
   );
 };
