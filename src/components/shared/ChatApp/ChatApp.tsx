@@ -6,7 +6,6 @@ import SendMessageIcon from "components/shared/icons/send-message.svg";
 import { isAuthorized } from "lib/utils/auth";
 import Pusher from "lib/utils/pusher";
 import { trpc } from "utils/trpc";
-import LoadingModal from "../modals/LoadingModal";
 
 const RECEIVER = "cl5tkhg260012xupvwot63ozj";
 
@@ -133,8 +132,8 @@ const ChatApp = ({ receiverId }: Props) => {
       <div className="h-full w-full bg-transparent py-12">
         <div className="h-full w-full overflow-y-auto flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
-          fetchMessagesQuery.isSuccess &&
-          chatMessages.length > 0 ? (
+            fetchMessagesQuery.isSuccess &&
+            chatMessages.length > 0 &&
             chatMessages.map((chatMsgObj, index) => {
               return (
                 <div key={index} className="w-full flex flex-col items-start">
@@ -155,10 +154,7 @@ const ChatApp = ({ receiverId }: Props) => {
                   </div>
                 </div>
               );
-            })
-          ) : (
-            <LoadingModal />
-          )}
+            })}
         </div>
       </div>
       <div
