@@ -1,7 +1,8 @@
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { trpc } from "utils/trpc";
+import SignOutModal from "../modals/SignOutModal";
 import NavBar from "./NavBar";
 
 type Props = {
@@ -30,10 +31,25 @@ const AdminLayout = ({ children }: Props) => {
     }
   }, [router, status, adminAccounts, session]);
 
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const onSignOut = async () => {
+    setIsSigningOut(true);
+    await signOut({ callbackUrl: "/" });
+    setIsSigningOut(false);
+  };
+
   return (
-    <main className="flex flex-row">
+    <main className="relative flex flex-row">
       <NavBar />
       {children}
+      {isSigningOut && <SignOutModal />}
+      <button
+        onClick={onSignOut}
+        className="hidden absolute bottom-2 right-2 p-2 text-red-500 text-sm md:block"
+      >
+        Sign out
+      </button>
     </main>
   );
 };
