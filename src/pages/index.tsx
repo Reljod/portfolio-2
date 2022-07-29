@@ -79,11 +79,11 @@ const Home: NextPage = () => {
               {isSigningOut && <SignOutModal />}
               <div className="relative w-screen h-screen py-6 px-6 md:pl-48 md:pr-24">
                 <div className="h-full flex flex-col md:grid md:grid-cols-5">
-                  <div className="flex flex-col justify-center space-y-1 w-1/2 md:w-full md:col-span-2">
-                    <h1 className="md:text-4xl">
+                  <div className="flex flex-col justify-center space-y-1 md:w-full md:col-span-2">
+                    <h1 className="text-sm md:text-4xl pr-6">
                       Ask me about anything
                       {isAuthorized(session) && (
-                        <span className="text-xl text-green-300 md:text-5xl">
+                        <span className="text-lg text-green-300 md:text-5xl">
                           {" " + getFirstName(session?.user?.name as string)}
                         </span>
                       )}
@@ -98,7 +98,9 @@ const Home: NextPage = () => {
                     id="chatting-app"
                     className="col-span-3 flex flex-col items-center h-full py-5 text-white md:p-5"
                   >
-                    <h2 className="text-center my-2">Let&apos;s chat!</h2>
+                    <h2 className="hidden text-center my-2 lg:block">
+                      Let&apos;s chat!
+                    </h2>
                     <ChatApp />
                   </div>
                 </div>
@@ -122,7 +124,7 @@ const Home: NextPage = () => {
                   )}
                   <button
                     onClick={onSignOut}
-                    className="absolute bottom-2 right-2 p-2 text-red-500 text-sm"
+                    className="hidden absolute bottom-2 right-2 p-2 text-red-500 text-sm md:block"
                   >
                     Sign out
                   </button>

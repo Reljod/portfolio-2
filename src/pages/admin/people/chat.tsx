@@ -2,8 +2,10 @@ import ChatApp from "components/shared/ChatApp";
 import AdminLayout from "components/shared/layouts/AdminLayout";
 import { getFirstName } from "lib/utils/stringUtils";
 import Image from "next/image";
+import { useState } from "react";
 
 import { trpc } from "utils/trpc";
+type index = number;
 
 const Chat = () => {
   const { data, isSuccess } = trpc.useQuery(
@@ -13,6 +15,7 @@ const Chat = () => {
       refetchOnWindowFocus: false,
     }
   );
+  const [currentAudienceInd, setCurrentAudienceInd] = useState<index>(0);
 
   return (
     <AdminLayout>
@@ -25,7 +28,8 @@ const Chat = () => {
             (data || []).map((user, i) => (
               <div
                 key={i}
-                className="relative flex h-[35px] min-h-[35px] w-full bg-zinc-800 m-3 rounded-lg"
+                onClick={() => setCurrentAudienceInd(i)}
+                className="relative flex h-[35px] min-h-[35px] w-full bg-zinc-800 m-3 rounded-lg hover:cursor-pointer hover:scale-105 hover:brightness-125"
               >
                 <div
                   id={`chat-contact-profile-pic-${i}`}
@@ -46,7 +50,7 @@ const Chat = () => {
             ))}
         </div>
         <div className="w-full h-4/5 sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] mt-14 ml-10 ">
-          {isSuccess && <ChatApp receiverId={data[0]?.id} />}
+          {isSuccess && <ChatApp receiverId={data[currentAudienceInd]?.id} />}
         </div>
       </section>
     </AdminLayout>
