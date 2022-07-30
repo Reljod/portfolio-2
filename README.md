@@ -3,7 +3,7 @@ Visit my portfolio at https://www.reljodoreta.com/
 
 ### Stack
 1. <b>Next.js</b> written in Typescript - A modern React Framework.
-2. Tailwindcss - A utility-first CSS framework packed with classes.
+2. Tailwindcss/DaisyUI - A utility-first CSS framework packed with classes.
 3. Prisma - Next-generation Node.js and TypeScript ORM.
 4. Next-auth - Authentication for Next.js
 5. tRPC - End-to-end typesafe APIs made easy
@@ -17,6 +17,7 @@ Visit my portfolio at https://www.reljodoreta.com/
 - [ ] About page
 - [ ] Tech stacks
 - [ ] Blacklists
+
 And more...
 
 ### Purpose and motivation
