@@ -35,13 +35,13 @@ const Home = (props: Props) => {
               </div>
             </div>
             <div className="bg-base-200 items-center lg:bg-transparent">
-              <div className="flex flex-row justify-between items-center max-w-7xl min-h-full px-4 lg:justify-center">
-                <p className="flex-none w-1/2 text-md">
+              <div className="flex flex-row justify-between items-center max-w-7xl min-h-full px-4 md:justify-center">
+                <p className="flex-none w-1/2 text-sm">
                   Ask me any questions via chat
                 </p>
                 <button
                   onClick={() => router.push("/chat")}
-                  className="flex-1 btn btn-primary rounded-lg my-2 mx-2 lg:flex-none"
+                  className="flex-1 btn btn-primary rounded-lg my-2 mx-2 text-sm md:flex-none"
                 >
                   Chat
                 </button>
