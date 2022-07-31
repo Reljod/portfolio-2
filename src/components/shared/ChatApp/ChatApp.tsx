@@ -132,7 +132,7 @@ const ChatApp = ({ receiverId }: Props) => {
   };
 
   return (
-    <div className="relative w-full h-full min-h-[600px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-base-200 lg:fit">
+    <div className="relative w-full h-[600px] max-h-[600px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-base-200 lg:fit">
       <div className="h-full w-full bg-transparent py-12">
         <div className="h-full w-full overflow-y-auto overflow-x-hidden flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
@@ -189,7 +189,7 @@ const ChatApp = ({ receiverId }: Props) => {
           <input
             onChange={onChangeInputText}
             value={chatInputText}
-            className="w-full bg-transparent text-gray-800 text-sm "
+            className="w-full bg-transparent text-sm "
           />
         </div>
         <button type="submit" className="h-5 w-5">
