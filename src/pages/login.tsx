@@ -51,11 +51,11 @@ const Login = () => {
       </Head>
       {status === "unauthenticated" && (
         <main data-theme={`${isDark ? "business" : "light"}`} id="login-page">
-          <div className="w-screen h-screen flex items-center justify-center p-6 no-scrollbar">
+          <div className="w-screen h-screen flex items-center justify-center no-scrollbar">
             {isSigningIn && <SignInModal />}
             <div
               id="login-form"
-              className="h-[480px] w-[480px] flex flex-col bg-base-300 rounded-xl p-8 shadow-lg"
+              className="h-[480px] w-[480px] flex flex-col bg-base-300 rounded-xl p-8 shadow-lg m-6"
             >
               <div
                 id="login-header"
