@@ -1,7 +1,7 @@
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlinePublic } from "react-icons/md";
-import { trpc } from "utils/trpc";
 import NavBarIcon from "./NavBarIcon";
 
 type Props = {
@@ -9,11 +9,7 @@ type Props = {
 };
 
 const NavBarUser = ({ onSignOut }: Props) => {
-  const { data: adminAccounts, isLoading: isAccountFetchLoading } =
-    trpc.useQuery(["fetchAccounts.fetchAdminAccounts"], {
-      staleTime: 5 * 60 * 1000,
-      refetchOnWindowFocus: false,
-    });
+  const { data: session } = useSession();
 
   return (
     <>
@@ -65,7 +61,7 @@ const NavBarUser = ({ onSignOut }: Props) => {
           >
             <Image
               src={
-                (adminAccounts && adminAccounts[0]?.image) ||
+                (session && session.user?.image) ||
                 "https://i.ibb.co/C8JjRyn/mock-profile-pic-male.jpg"
               }
               alt="mock-profile-pic-male"
@@ -100,16 +96,5 @@ const NavBarUser = ({ onSignOut }: Props) => {
     </>
   );
 };
-
-const ChatsLink = () => (
-  <Link href="/admin/people/chat" className="m-1">
-    Chat
-  </Link>
-);
-const BlocklistsLink = () => (
-  <Link href="/admin/people/blocklists" className="m-1">
-    Blocklists
-  </Link>
-);
 
 export default NavBarUser;
