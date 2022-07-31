@@ -51,7 +51,7 @@ const Login = () => {
       </Head>
       {status === "unauthenticated" && (
         <main data-theme={`${isDark ? "business" : "light"}`} id="login-page">
-          <div className="w-screen h-screen flex items-center justify-center p-6 ">
+          <div className="w-screen h-screen flex items-center justify-center p-6 .no-scrollbar">
             {isSigningIn && <SignInModal />}
             <div
               id="login-form"
