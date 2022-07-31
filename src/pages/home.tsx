@@ -14,7 +14,7 @@ const Home = (props: Props) => {
     <>
       {!isAuthorized(session) && <LoginModal />}
       <Layout isShowThemeToggle={true}>
-        <section className="space-y-4 lg:flex lg:flex-row">
+        <section className="lg:flex lg:flex-row mx-1 mr-2">
           <div className="lg:w-1/2 lg:mt-32">
             <div className="hero bg-base-200 lg:bg-transparent">
               <div className="hero-content flex-col lg:flex-row-reverse">

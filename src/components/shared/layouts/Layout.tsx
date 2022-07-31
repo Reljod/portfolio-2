@@ -40,7 +40,7 @@ const Layout = ({ children, isShowThemeToggle }: Props) => {
     >
       <NavBar onSignOut={onSignOut} />
       {showThemeToggle && <ThemeChanger onChange={toggleTheme} />}
-      <div id="layout-content" className="px-2 py-1">
+      <div id="layout-content">
         {isSigningOut && <SignOutModal />}
         {children}
       </div>

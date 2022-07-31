@@ -132,9 +132,9 @@ const ChatApp = ({ receiverId }: Props) => {
   };
 
   return (
-    <div className="relative w-full h-[600px] max-h-[600px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-base-200 lg:fit">
-      <div className="h-full w-full bg-transparent py-12">
-        <div className="h-full w-full overflow-y-auto overflow-x-hidden flex flex-col-reverse items-end md:p-2">
+    <div className="relative w-full h-[600px] max-h-[600px] rounded-3xl bg-base-200 mx-2 my-1 md:w-[400px] md:h-[600px] md:max-h-[600px] lg:fit">
+      <div className="h-full bg-transparent py-12 mr-2">
+        <div className="h-full w-full overflow-y-auto overflow-x-hidden flex flex-col-reverse items-end">
           {status === "authenticated" &&
             fetchMessagesQuery.isSuccess &&
             chatMessages.length > 0 &&

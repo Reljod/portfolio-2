@@ -27,7 +27,9 @@ const NavBarUser = ({ onSignOut }: Props) => {
                 <Link href="/home">Home</Link>
               </li>
               <li>
-                <Link href="/about">About me</Link>
+                <Link href="/about" className="disabled">
+                  About me
+                </Link>
               </li>
               <li>
                 <Link href="/chat">Message me</Link>
@@ -47,7 +49,9 @@ const NavBarUser = ({ onSignOut }: Props) => {
               <Link href="/home">Home</Link>
             </li>
             <li>
-              <Link href="/about">About me</Link>
+              <Link href="/about" className="disabled">
+                About me
+              </Link>
             </li>
             <li>
               <Link href="/chat">Message me</Link>
@@ -78,11 +82,14 @@ const NavBarUser = ({ onSignOut }: Props) => {
             <li>
               <a className="justify-between">
                 Profile
-                <span className="badge">New</span>
+                <span className="badge">Soon..</span>
               </a>
             </li>
             <li>
-              <a>Settings</a>
+              <a className="justify-between">
+                Settings
+                <span className="badge">Soon..</span>
+              </a>
             </li>
             <li>
               <a onClick={() => onSignOut()} className="text-error">
