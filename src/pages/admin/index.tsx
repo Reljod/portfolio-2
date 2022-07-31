@@ -17,7 +17,8 @@ const Admin = () => {
 
   return (
     <AdminLayout>
-      <h1 className="text-center mx-auto my-auto text-3xl">Dashboard</h1>
+      <p></p>
+      {/* <h1 className="text-center mx-auto my-auto text-3xl">Dashboard</h1> */}
     </AdminLayout>
   );
 };

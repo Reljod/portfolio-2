@@ -1,88 +1,115 @@
-import { useRouter } from "next/router";
-import React, { FC, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { MdOutlinePublic } from "react-icons/md";
+import { trpc } from "utils/trpc";
+import NavBarIcon from "./NavBarIcon";
 
-type Props = {};
-
-enum NavBarMinEnum {
-  MINIMIZE = "<<",
-  MAXIMIZE = ">>",
-}
-
-type NavBarMinimizeBtnProps = {
-  value: NavBarMinEnum;
-  onClick: () => void;
+type Props = {
+  onSignOut: () => void;
 };
 
-const NavBarMinimizeBtn = ({ value, onClick }: NavBarMinimizeBtnProps) => {
-  return (
-    <div
-      onClick={onClick}
-      className="absolute top-2 right-[-16px] p-1 px-2 rounded-full bg-zinc-900 aspect-squar hover:cursor-pointer hover:brightness-125"
-    >
-      {value}
-    </div>
-  );
-};
-
-const NavBarItems: FC<{ children: React.ReactNode; onClick: () => void }> = ({
-  children,
-  onClick,
-}) => {
-  return (
-    <div
-      onClick={onClick}
-      className="px-2 py-2 text-sm font-semibold rounded-md hover:bg-zinc-700 hover:cursor-pointer active:bg-zinc-900"
-    >
-      {children}
-    </div>
-  );
-};
-
-const NavBar = (props: Props) => {
-  const router = useRouter();
-  const [isMinimized, setIsMinimized] = useState(false);
-
-  // Style functions
-  const setNavBarWidth = () => {
-    if (isMinimized) {
-      return "w-[50px]";
-    }
-    return "w-[200px]";
-  };
-
-  const setNavValue = (maximizedVal: string, minimizedVal: string) => {
-    if (isMinimized) {
-      return minimizedVal;
-    }
-    return maximizedVal;
-  };
+const NavBarUser = ({ onSignOut }: Props) => {
+  const { data: adminAccounts, isLoading: isAccountFetchLoading } =
+    trpc.useQuery(["fetchAccounts.fetchAdminAccounts"], {
+      staleTime: 5 * 60 * 1000,
+      refetchOnWindowFocus: false,
+    });
 
   return (
-    <div
-      className={`relative h-screen ${setNavBarWidth()} bg-zinc-800 shadow-md shadow-slate-900 p-2`}
-    >
-      <NavBarMinimizeBtn
-        onClick={() => setIsMinimized(!isMinimized)}
-        value={isMinimized ? NavBarMinEnum.MAXIMIZE : NavBarMinEnum.MINIMIZE}
-      />
-      <div className="flex flex-col">
-        <h1
-          onClick={() => router.push("/admin")}
-          className="self-center text-4xl font-bold hover:cursor-pointer"
-        >
-          {isMinimized ? "A" : "Admin"}
-        </h1>
-        <section id="tabs" className="my-4 space-y-2">
-          <NavBarItems onClick={() => router.push("/admin")}>
-            {setNavValue("Dashboard", "D")}
-          </NavBarItems>
-          <NavBarItems onClick={() => router.push("/admin/people/chat")}>
-            <p>{setNavValue("People", "P")}</p>
-          </NavBarItems>
-        </section>
+    <>
+      <div className="navbar bg-base-200">
+        <div className="navbar-start">
+          <div className="dropdown">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
+              <NavBarIcon />
+            </label>
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <Link href="/home">Home</Link>
+              </li>
+              <li>
+                <Link href="/about">About me</Link>
+              </li>
+              <li>
+                <Link href="/chat">Message me</Link>
+              </li>
+            </ul>
+          </div>
+          <Link href="/" className="btn btn-ghost">
+            <span className="flex items-center justify-between lg:ml-2 normal-case text-lg hover:cursor-pointer lg:text-2xl">
+              <MdOutlinePublic className="w-5 h-5 mr-1 hover:cursor-pointer lg:w-6 lg:h-6" />
+              Reljod
+            </span>
+          </Link>
+        </div>
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal p-0">
+            <li>
+              <Link href="/home">Home</Link>
+            </li>
+            <li>
+              <Link href="/about">About me</Link>
+            </li>
+            <li>
+              <Link href="/chat">Message me</Link>
+            </li>
+          </ul>
+        </div>
+        <div className="navbar-end dropdown-end">
+          <label
+            tabIndex={0}
+            className="w-8 h-8 rounded-full mx-2 hover:cursor-pointer hover:ring hover:ring-primary focus:ring focus:ring-primary peer"
+          >
+            <Image
+              src={
+                (adminAccounts && adminAccounts[0]?.image) ||
+                "https://i.ibb.co/C8JjRyn/mock-profile-pic-male.jpg"
+              }
+              alt="mock-profile-pic-male"
+              className="rounded-full"
+              width="40"
+              height="40"
+            ></Image>
+          </label>
+
+          <ul
+            tabIndex={0}
+            className="invisible absolute menu menu-compact dropdown-content top-10 right-0 mt-3 p-2 shadow bg-base-100 z-10  rounded-box w-52 peer-focus:visible hover:visible"
+          >
+            <li>
+              <a className="justify-between">
+                Profile
+                <span className="badge">New</span>
+              </a>
+            </li>
+            <li>
+              <a>Settings</a>
+            </li>
+            <li>
+              <a onClick={() => onSignOut()} className="text-error">
+                Logout
+              </a>
+            </li>
+          </ul>
+          {/* )} */}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default NavBar;
+const ChatsLink = () => (
+  <Link href="/admin/people/chat" className="m-1">
+    Chat
+  </Link>
+);
+const BlocklistsLink = () => (
+  <Link href="/admin/people/blocklists" className="m-1">
+    Blocklists
+  </Link>
+);
+
+export default NavBarUser;

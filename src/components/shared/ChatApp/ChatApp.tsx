@@ -132,7 +132,7 @@ const ChatApp = ({ receiverId }: Props) => {
   };
 
   return (
-    <div className="relative w-full h-full min-h-[400px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-zinc-800">
+    <div className="relative w-full h-full min-h-[600px] sm:w-[300px] md:w-[400px] md:h-[600px] md:max-h-[600px] rounded-3xl bg-base-200 lg:fit">
       <div className="h-full w-full bg-transparent py-12">
         <div className="h-full w-full overflow-y-auto overflow-x-hidden flex flex-col-reverse items-end md:p-2">
           {status === "authenticated" &&
@@ -147,8 +147,8 @@ const ChatApp = ({ receiverId }: Props) => {
                   <div
                     className={`${
                       isMessageOwner(session, chatMsgObj.sender)
-                        ? "self-end bg-blue-600 ml-8"
-                        : "self-start bg-zinc-700 mr-8"
+                        ? "self-end bg-blue-400 dark:bg-blue-600 ml-8"
+                        : "self-start dark:bg-zinc-700 mr-8"
                     } w-fit px-4 py-1 rounded-2xl m-1`}
                   >
                     <p className="text-sm text-start break-all">
@@ -162,7 +162,7 @@ const ChatApp = ({ receiverId }: Props) => {
       </div>
       <div
         id="chat-header"
-        className="absolute top-0 w-full flex items-center h-12 rounded-t-3xl bg-zinc-900 bg-opacity-50 px-3"
+        className="absolute top-0 w-full flex items-center h-12 rounded-t-3xl bg-base-300 bg-opacity-50 px-3"
       >
         <div className="w-7 h-7 rounded-full bg-white mx-2">
           <Image
@@ -183,9 +183,9 @@ const ChatApp = ({ receiverId }: Props) => {
       </div>
       <form
         onSubmit={onChatEnter}
-        className="absolute bottom-0 w-full flex items-center h-12 rounded-b-3xl bg-zinc-900 bg-opacity-50 px-3 py-2 space-x-2"
+        className="absolute bottom-0 w-full flex items-center h-12 rounded-b-3xl bg-base-300 bg-opacity-50 px-3 py-2 space-x-2"
       >
-        <div className="h-full w-full rounded-2xl bg-zinc-400 p-1 px-2">
+        <div className="h-full w-full rounded-2xl bg-base-100 p-1 px-2">
           <input
             onChange={onChangeInputText}
             value={chatInputText}

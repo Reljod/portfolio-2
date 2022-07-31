@@ -1,4 +1,6 @@
+import { useThemeStore } from "components/shared/layouts/Layout";
 import SignInModal from "components/shared/modals/SignInModal";
+import ThemeChanger from "components/shared/ThemeChanger";
 import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import Image from "next/image";
@@ -38,6 +40,9 @@ const Login = () => {
     console.log(data.firstname, data.emailAddress);
   };
 
+  const isDark = useThemeStore((state) => state.dark);
+  const toggleTheme = useThemeStore((state) => state.toggleTheme);
+
   return (
     <>
       <Head>
@@ -45,23 +50,21 @@ const Login = () => {
         <meta name="description" content="Login Page" />
       </Head>
       {status === "unauthenticated" && (
-        <main id="login-page" className="text-white">
+        <main data-theme={`${isDark ? "business" : "light"}`} id="login-page">
           <div className="w-screen h-screen flex items-center justify-center p-6 ">
             {isSigningIn && <SignInModal />}
             <div
               id="login-form"
-              className="h-[480px] w-[480px] flex flex-col bg-zinc-800 rounded-xl p-8 shadow-lg"
+              className="h-[480px] w-[480px] flex flex-col bg-base-300 rounded-xl p-8 shadow-lg"
             >
               <div
                 id="login-header"
                 className="self-center text-center space-y-1"
               >
-                <h2 className="text-2xl text-green-400">
+                <h2 className="text-2xl text-primary">
                   Let&apos;s get to know you!
                 </h2>
-                <h3 className="text-sm text-gray-300">
-                  Sign in and Let&apos;s talk.
-                </h3>
+                <h3 className="text-sm">Sign in and Let&apos;s talk.</h3>
               </div>
               <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -70,12 +73,12 @@ const Login = () => {
                 <label className="my-1">Email Address</label>
                 <input
                   {...register("emailAddress")}
-                  className="mb-1 px-2 py-2 bg-zinc-900 rounded-lg"
+                  className="mb-1 px-2 py-2 bg-base-100 rounded-lg"
                 />
                 <label className="my-1">Username</label>
                 <input
                   {...register("firstname")}
-                  className="mb-1 px-2 py-2 bg-zinc-900 rounded-lg"
+                  className="mb-1 px-2 py-2 bg-base-100 rounded-lg"
                 />
                 <button
                   type="submit"
@@ -116,6 +119,7 @@ const Login = () => {
               </div>
             </div>
           </div>
+          <ThemeChanger onChange={toggleTheme} />
         </main>
       )}
     </>

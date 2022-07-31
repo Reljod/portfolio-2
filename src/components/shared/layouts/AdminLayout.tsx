@@ -1,13 +1,18 @@
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { trpc } from "utils/trpc";
-import SignOutModal from "../modals/SignOutModal";
-import NavBar from "./NavBar";
+import NavBarAdmin from "./NavBarAdmin";
 
 type Props = {
   children: React.ReactNode;
 };
+
+const ChatsLink = () => <Link href="/admin/people/chat">Chats</Link>;
+const BlocklistsLink = () => (
+  <Link href="/admin/people/blocklists">Blocklists</Link>
+);
 
 const AdminLayout = ({ children }: Props) => {
   const router = useRouter();
@@ -39,17 +44,18 @@ const AdminLayout = ({ children }: Props) => {
     setIsSigningOut(false);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <main className="relative flex flex-row">
-      <NavBar />
-      {children}
-      {isSigningOut && <SignOutModal />}
-      <button
+    <main className="relative flex flex-col">
+      <NavBarAdmin>{children}</NavBarAdmin>
+      {/* {isSigningOut && <SignOutModal />} */}
+      {/* <button
         onClick={onSignOut}
         className="hidden absolute bottom-2 right-2 p-2 text-red-500 text-sm md:block"
       >
         Sign out
-      </button>
+      </button> */}
     </main>
   );
 };

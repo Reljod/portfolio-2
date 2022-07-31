@@ -2,6 +2,7 @@
 
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  darkMode: ['class', '[data-mode="business"]'],
   theme: {
     extend: {
       fontFamily: {
@@ -9,5 +10,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")]
 };

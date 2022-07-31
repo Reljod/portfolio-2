@@ -12,11 +12,11 @@ const LoginModal = () => {
   return (
     <div
       id="login-modal"
-      className="absolute w-screen h-screen flex justify-center items-center z-10 bg-gray-800 bg-opacity-70"
+      className="absolute w-full h-full flex justify-center items-start z-10 bg-gray-800 bg-opacity-70"
     >
       <div
         id="modal"
-        className="flex flex-col items-center w-[350px] bg-zinc-800 border border-zinc-700 rounded-xl p-3"
+        className="flex flex-col items-center w-[350px] bg-zinc-800 border border-zinc-700 rounded-xl p-3 mt-52"
       >
         <p className="text-md text-center">
           I will be happy to know more

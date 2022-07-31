@@ -3,7 +3,7 @@ import { Head, Html, Main, NextScript } from "next/document";
 
 const Document: NextPage = () => {
   return (
-    <Html>
+    <Html data-theme="business">
       <Head>
         <meta name="description" content="Reljod Oreta's Portfolio" />
         <link rel="icon" href="/favicon.ico" />
@@ -14,7 +14,7 @@ const Document: NextPage = () => {
           rel="stylesheet"
         />
       </Head>
-      <body className="bg-slate-800 text-white font-primary">
+      <body className="relative font-primary">
         <Main />
         <NextScript />
       </body>

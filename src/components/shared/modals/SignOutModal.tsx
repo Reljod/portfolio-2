@@ -3,8 +3,8 @@ type Props = {};
 const SignOutModal = (props: Props) => {
   return (
     <>
-      <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 flex justify-center items-center z-10"></div>
-      <div className="absolute top-1/2 left-0 flex z-10 items-center justify-center w-full">
+      <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40 flex justify-center items-start z-10"></div>
+      <div className="absolute top-0 left-0 flex z-10 items-start justify-center w-full mt-52">
         <svg
           aria-hidden="true"
           className="mr-2 w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-gray-600"
@@ -21,7 +21,7 @@ const SignOutModal = (props: Props) => {
             fill="currentFill"
           />
         </svg>
-        <p>
+        <p className="font-bold">
           Signing out<span className="animate-type">...</span>
         </p>
       </div>
