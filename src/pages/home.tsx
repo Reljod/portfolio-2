@@ -76,7 +76,7 @@ const Home = (props: Props) => {
                 }}
               >
                 <p className="bg-base-200 bg-opacity-70">
-                  I want a spin up a backend server.
+                  I want to spin up a backend server.
                 </p>
               </div>
               <div
@@ -90,7 +90,7 @@ const Home = (props: Props) => {
                 }}
               >
                 <p className="bg-base-200 bg-opacity-70">
-                  I want to automate my everyday manual tasks using programming.
+                  I want to automate my everyday manual tasks with scripts.
                 </p>
               </div>
             </div>
